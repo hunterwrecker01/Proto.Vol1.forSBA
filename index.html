@@ -41,7 +41,7 @@
             font-size: 1.2rem;
             margin-bottom: 30px;
         }
-        .start-btn {
+        .start-btn, .response-btn {
             font-size: 1.5rem;
             padding: 10px 30px;
             color: #f39c12;
@@ -51,21 +51,51 @@
             cursor: pointer;
             transition: transform 0.3s ease, background-color 0.3s ease;
         }
-        .start-btn:hover {
+        .start-btn:hover, .response-btn:hover {
             background-color: #ffeaa7;
             transform: scale(1.1);
+        }
+        .question-card {
+            display: none;
+            padding: 20px;
+            color: #333;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .response-btn {
+            margin: 10px;
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="landing-page">
         <h1>Hey there!</h1>
         <p>Ready to have some fun with a few playful questions?</p>
-        <button class="start-btn" onclick="startQuestions()">Start</button>
+        <button class="start-btn" onclick="showQuestion()">Start</button>
     </div>
+
+    <div class="question-card" id="question-card">
+        <h2>Question 1</h2>
+        <p>If you could teleport anywhere in the world right now, where would you go?</p>
+        <button class="response-btn" onclick="nextQuestion()">Beach</button>
+        <button class="response-btn" onclick="nextQuestion()">Mountains</button>
+    </div>
+
     <script>
-        function startQuestions() {
-            alert("Let's get started with the questions!"); // Placeholder for moving to the first question
+        function showQuestion() {
+            document.getElementById("landing-page").style.display = "none";
+            document.getElementById("question-card").style.display = "block";
+        }
+
+        function nextQuestion() {
+            alert("More questions coming soon!"); // Placeholder for additional questions
         }
     </script>
 </body>
