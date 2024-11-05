@@ -76,55 +76,80 @@
             color: #333;
         }
 
-        /* Floating Stuffed Animal Styling */
+        /* Bouncing Stuffed Animal Styling */
         .stuffed-animal {
             position: absolute;
             width: 50px;
             height: 50px;
             opacity: 0.9;
-            animation: floatAnimals 20s linear infinite;
+            animation: bounce 5s ease-in-out infinite;
         }
-        .stuffed-animal:nth-child(odd) { transform: scaleX(-1); }
         
-        /* Floating Animation */
-        @keyframes floatAnimals {
-            0% { transform: translateY(100vh) translateX(0); }
-            100% { transform: translateY(-100vh) translateX(30vw); }
+        /* Bounce Animation */
+        @keyframes bounce {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(100vw, 100vh); }
+            50% { transform: translate(0, 100vh); }
+            75% { transform: translate(100vw, 0); }
+            100% { transform: translate(0, 0); }
         }
 
-        /* Hello Kitty Walking Animation */
-        .hello-kitty {
-            position: absolute;
-            bottom: 10px;
-            left: -60px;
-            width: 60px;
-            animation: kittyWalk 10s linear infinite;
+        /* Midpoint Message Styling */
+        .midpoint-card {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #333;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease forwards;
         }
-        
-        @keyframes kittyWalk {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(100vw); }
+        .midpoint-card img {
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .midpoint-message {
+            font-size: 1.2rem;
+            white-space: pre-wrap;
+            overflow: hidden;
+            border-right: .15em solid orange;
+            animation: typing 4s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: orange; }
         }
     </style>
 </head>
 <body>
-    <!-- Floating Stuffed Animals -->
+    <!-- Bouncing Stuffed Animals -->
     <div id="animal-container">
-        <img src="stuffed1.jpeg" class="stuffed-animal" style="left: 10%; animation-duration: 15s;">
-        <img src="stuffed2.jpeg" class="stuffed-animal" style="left: 20%; animation-duration: 18s;">
-        <img src="stuffed3.jpeg" class="stuffed-animal" style="left: 30%; animation-duration: 16s;">
-        <img src="stuffed4.jpeg" class="stuffed-animal" style="left: 40%; animation-duration: 22s;">
-        <img src="stuffed5.jpeg" class="stuffed-animal" style="left: 50%; animation-duration: 20s;">
-        <img src="stuffed6.jpeg" class="stuffed-animal" style="left: 60%; animation-duration: 19s;">
+        <img src="stuffed1.jpeg" class="stuffed-animal" style="left: 10%; animation-duration: 4s;">
+        <img src="stuffed2.jpeg" class="stuffed-animal" style="left: 20%; animation-duration: 6s;">
+        <img src="stuffed3.jpeg" class="stuffed-animal" style="left: 30%; animation-duration: 5s;">
+        <img src="stuffed4.jpeg" class="stuffed-animal" style="left: 40%; animation-duration: 7s;">
+        <img src="stuffed5.jpeg" class="stuffed-animal" style="left: 50%; animation-duration: 6s;">
+        <img src="stuffed6.jpeg" class="stuffed-animal" style="left: 60%; animation-duration: 5s;">
     </div>
-
-    <!-- Hello Kitty Animation -->
-    <img src="HelloKitty.png" alt="Hello Kitty" class="hello-kitty">
 
     <div class="container" id="landing-page">
         <h1>Hey there!</h1>
         <p>Ready to have some fun with a few playful questions?</p>
         <button class="start-btn" onclick="showQuestion(0)">Start</button>
+    </div>
+
+    <!-- Midpoint Display with Picture and Message -->
+    <div class="midpoint-card" id="midpoint-card">
+        <img src="IMG_1065.jpg" alt="Special Person">
+        <p class="midpoint-message" id="midpoint-message">Congrats on making it halfway of this and so I want to remind this person She is special to me</p>
+        <button class="response-btn" onclick="continueQuestions()">Continue</button>
     </div>
 
     <div class="question-card" id="question-card">
@@ -150,6 +175,7 @@
 
         function showQuestion(index) {
             document.getElementById("landing-page").style.display = "none";
+            document.getElementById("midpoint-card").style.display = "none";
             document.getElementById("question-card").style.display = "block";
             document.getElementById("question-text").innerText = questions[index];
             document.getElementById("question-title").innerText = `Question ${index + 1}`;
@@ -157,11 +183,22 @@
 
         function nextQuestion() {
             currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
+            if (currentQuestionIndex === 5) {
+                showMidpointCard();
+            } else if (currentQuestionIndex < questions.length) {
                 showQuestion(currentQuestionIndex);
             } else {
                 document.getElementById("question-card").innerHTML = "<h2>Thank you!</h2><p>Those were some fun questions! 😊</p>";
             }
+        }
+
+        function showMidpointCard() {
+            document.getElementById("question-card").style.display = "none";
+            document.getElementById("midpoint-card").style.display = "block";
+        }
+
+        function continueQuestions() {
+            showQuestion(currentQuestionIndex);
         }
     </script>
 </body>
