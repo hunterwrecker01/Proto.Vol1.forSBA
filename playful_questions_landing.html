@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playful Questions</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f39c12, #f1c40f);
+            animation: backgroundAnimation 10s ease infinite alternate;
+        }
+        @keyframes backgroundAnimation {
+            0% { background: linear-gradient(135deg, #f39c12, #f1c40f); }
+            100% { background: linear-gradient(135deg, #ff7675, #ffeaa7); }
+        }
+        .container {
+            text-align: center;
+            color: #fff;
+            max-width: 90%;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        .start-btn {
+            font-size: 1.5rem;
+            padding: 10px 30px;
+            color: #f39c12;
+            background: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .start-btn:hover {
+            background-color: #ffeaa7;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hey there!</h1>
+        <p>Ready to have some fun with a few playful questions?</p>
+        <button class="start-btn" onclick="startQuestions()">Start</button>
+    </div>
+    <script>
+        function startQuestions() {
+            alert("Let's get started with the questions!"); // Placeholder for moving to the first question
+        }
+    </script>
+</body>
+</html>
