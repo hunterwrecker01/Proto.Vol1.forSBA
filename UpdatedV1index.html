@@ -32,8 +32,10 @@
             max-width: 90%;
             padding: 20px;
             border-radius: 10px;
+            z-index: 1; /* Place content above the background */
+            position: relative;
         }
-        h1 {
+        h1, h2 {
             font-size: 2.5rem;
             margin-bottom: 20px;
         }
@@ -63,6 +65,8 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             animation: fadeIn 1s ease forwards;
+            position: relative;
+            z-index: 1;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -72,30 +76,93 @@
             margin: 10px;
             color: #333;
         }
+
+        /* Floating Stuffed Animal Styling */
+        .stuffed-animal {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0.9;
+            animation: floatAnimals 20s linear infinite;
+        }
+        .stuffed-animal:nth-child(odd) { transform: scaleX(-1); }
+        
+        /* Floating Animation */
+        @keyframes floatAnimals {
+            0% { transform: translateY(100vh) translateX(0); }
+            100% { transform: translateY(-100vh) translateX(30vw); }
+        }
+
+        /* Hello Kitty Walking Animation */
+        .hello-kitty {
+            position: absolute;
+            bottom: 10px;
+            left: -60px;
+            width: 60px;
+            animation: kittyWalk 10s linear infinite;
+        }
+        
+        @keyframes kittyWalk {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(100vw); }
+        }
     </style>
 </head>
 <body>
+    <!-- Floating Stuffed Animals -->
+    <div id="animal-container">
+        <img src="https://path-to-image/stuffed_animal1.png" class="stuffed-animal" style="left: 10%; animation-duration: 15s;">
+        <img src="https://path-to-image/stuffed_animal2.png" class="stuffed-animal" style="left: 20%; animation-duration: 18s;">
+        <img src="https://path-to-image/stuffed_animal3.png" class="stuffed-animal" style="left: 30%; animation-duration: 16s;">
+        <img src="https://path-to-image/stuffed_animal4.png" class="stuffed-animal" style="left: 40%; animation-duration: 22s;">
+        <img src="https://path-to-image/stuffed_animal5.png" class="stuffed-animal" style="left: 50%; animation-duration: 20s;">
+        <img src="https://path-to-image/stuffed_animal6.png" class="stuffed-animal" style="left: 60%; animation-duration: 19s;">
+    </div>
+
+    <!-- Hello Kitty Animation -->
+    <img src="https://path-to-image/hello_kitty.png" alt="Hello Kitty" class="hello-kitty">
+
     <div class="container" id="landing-page">
         <h1>Hey there!</h1>
         <p>Ready to have some fun with a few playful questions?</p>
-        <button class="start-btn" onclick="showQuestion()">Start</button>
+        <button class="start-btn" onclick="showQuestion(0)">Start</button>
     </div>
 
     <div class="question-card" id="question-card">
-        <h2>Question 1</h2>
-        <p>If you could teleport anywhere in the world right now, where would you go?</p>
-        <button class="response-btn" onclick="nextQuestion()">Beach</button>
-        <button class="response-btn" onclick="nextQuestion()">Mountains</button>
+        <h2 id="question-title">Question</h2>
+        <p id="question-text"></p>
+        <button class="response-btn" onclick="nextQuestion()">Next</button>
     </div>
 
     <script>
-        function showQuestion() {
+        const questions = [
+            "If you could take me to one place that’s special to you, where would it be, and why?",
+            "What’s one memory from your childhood that still makes you smile?",
+            "If we had a day to spend however we wanted, what would our day look like?",
+            "What’s a song that reminds you of a really happy time in your life? What makes it special?",
+            "What’s something simple that makes you feel really appreciated or cared for?",
+            "If you could ask me one deep or slightly embarrassing question, what would it be? (I promise to answer honestly!)",
+            "What’s a little-known fact about you that you wish more people understood?",
+            "What’s one thing you’re passionate about that not many people know?",
+            "If you could give me one piece of advice about life or love, what would it be?",
+            "Do you like me as a person, as a human, as more than an online stranger? Would you like to see where things go if they start to get serious?"
+        ];
+        let currentQuestionIndex = 0;
+
+        function showQuestion(index) {
             document.getElementById("landing-page").style.display = "none";
             document.getElementById("question-card").style.display = "block";
+            document.getElementById("question-text").innerText = questions[index];
+            document.getElementById("question-title").innerText = `Question ${index + 1}`;
         }
 
         function nextQuestion() {
-            alert("More questions coming soon!"); // Placeholder for additional questions
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion(currentQuestionIndex);
+            } else {
+                document.getElementById("question-card").innerHTML = "<h2>Thank you!</h2><p>Those were some fun questions! 😊</p>";
+            }
         }
     </script>
 </body>
