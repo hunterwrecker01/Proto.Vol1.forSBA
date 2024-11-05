@@ -20,6 +20,7 @@
             overflow: hidden;
             background: linear-gradient(135deg, #f39c12, #f1c40f);
             animation: backgroundAnimation 10s ease infinite alternate;
+            position: relative;
         }
         @keyframes backgroundAnimation {
             0% { background: linear-gradient(135deg, #f39c12, #f1c40f); }
@@ -31,7 +32,7 @@
             max-width: 90%;
             padding: 20px;
             border-radius: 10px;
-            z-index: 1; /* Place content above the background */
+            z-index: 1;
             position: relative;
         }
         h1, h2 {
@@ -56,7 +57,7 @@
             background-color: #ffeaa7;
             transform: scale(1.1);
         }
-        .question-card {
+        .question-card, .midpoint-card, .final-message {
             display: none;
             padding: 20px;
             color: #333;
@@ -65,46 +66,30 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             animation: fadeIn 1s ease forwards;
             position: relative;
-            z-index: 1;
+            z-index: 10; /* Foreground */
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .response-btn {
-            margin: 10px;
-            color: #333;
-        }
-
-        /* Bouncing Stuffed Animal Styling */
         .stuffed-animal {
             position: absolute;
-            width: 50px;
-            height: 50px;
+            width: 80px;
+            height: 80px;
             opacity: 0.9;
-            animation: bounce 5s ease-in-out infinite;
+            animation: randomMove 10s linear infinite;
+            z-index: 1; /* Background */
         }
         
-        /* Bounce Animation */
-        @keyframes bounce {
+        /* Random Movement */
+        @keyframes randomMove {
             0% { transform: translate(0, 0); }
-            25% { transform: translate(100vw, 100vh); }
-            50% { transform: translate(0, 100vh); }
-            75% { transform: translate(100vw, 0); }
+            25% { transform: translate(50vw, 20vh); }
+            50% { transform: translate(-30vw, 40vh); }
+            75% { transform: translate(30vw, -20vh); }
             100% { transform: translate(0, 0); }
         }
 
-        /* Midpoint Message Styling */
-        .midpoint-card {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            color: #333;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 1s ease forwards;
-        }
         .midpoint-card img {
             width: 150px;
             height: auto;
@@ -129,14 +114,14 @@
     </style>
 </head>
 <body>
-    <!-- Bouncing Stuffed Animals -->
+    <!-- Randomly Moving Stuffed Animals -->
     <div id="animal-container">
-        <img src="stuffed1.jpeg" class="stuffed-animal" style="left: 10%; animation-duration: 4s;">
-        <img src="stuffed2.jpeg" class="stuffed-animal" style="left: 20%; animation-duration: 6s;">
-        <img src="stuffed3.jpeg" class="stuffed-animal" style="left: 30%; animation-duration: 5s;">
-        <img src="stuffed4.jpeg" class="stuffed-animal" style="left: 40%; animation-duration: 7s;">
-        <img src="stuffed5.jpeg" class="stuffed-animal" style="left: 50%; animation-duration: 6s;">
-        <img src="stuffed6.jpeg" class="stuffed-animal" style="left: 60%; animation-duration: 5s;">
+        <img src="stuffed1.jpeg" class="stuffed-animal" style="left: 5%; animation-duration: 12s;">
+        <img src="stuffed2.jpeg" class="stuffed-animal" style="left: 15%; animation-duration: 14s;">
+        <img src="stuffed3.jpeg" class="stuffed-animal" style="left: 25%; animation-duration: 10s;">
+        <img src="stuffed4.jpeg" class="stuffed-animal" style="left: 35%; animation-duration: 16s;">
+        <img src="stuffed5.jpeg" class="stuffed-animal" style="left: 45%; animation-duration: 13s;">
+        <img src="stuffed6.jpeg" class="stuffed-animal" style="left: 55%; animation-duration: 15s;">
     </div>
 
     <div class="container" id="landing-page">
@@ -158,6 +143,12 @@
         <button class="response-btn" onclick="nextQuestion()">Next</button>
     </div>
 
+    <!-- Final Message Display -->
+    <div class="final-message" id="final-message">
+        <h2>Thank you for playing today!</h2>
+        <p>If you like this today and want more of the fun stuff, keep this developer with you lmao byee ;)</p>
+    </div>
+
     <script>
         const questions = [
             "If you could take me to one place that’s special to you, where would it be, and why?",
@@ -176,6 +167,7 @@
         function showQuestion(index) {
             document.getElementById("landing-page").style.display = "none";
             document.getElementById("midpoint-card").style.display = "none";
+            document.getElementById("final-message").style.display = "none";
             document.getElementById("question-card").style.display = "block";
             document.getElementById("question-text").innerText = questions[index];
             document.getElementById("question-title").innerText = `Question ${index + 1}`;
@@ -188,7 +180,7 @@
             } else if (currentQuestionIndex < questions.length) {
                 showQuestion(currentQuestionIndex);
             } else {
-                document.getElementById("question-card").innerHTML = "<h2>Thank you!</h2><p>Those were some fun questions! 😊</p>";
+                showFinalMessage();
             }
         }
 
@@ -199,6 +191,11 @@
 
         function continueQuestions() {
             showQuestion(currentQuestionIndex);
+        }
+
+        function showFinalMessage() {
+            document.getElementById("question-card").style.display = "none";
+            document.getElementById("final-message").style.display = "block";
         }
     </script>
 </body>
